@@ -12,7 +12,7 @@ engine = create_engine(SQLITE_DATABASE_URL, echo=True)
 
 Base = declarative_base()
 
-SessionLocal = sessionmaker(bind=engine, autoflush=True, autocommit=True)
+SessionLocal = sessionmaker(bind=engine)
 
 def get_db():
     with SessionLocal() as db:
