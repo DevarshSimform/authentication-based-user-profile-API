@@ -27,7 +27,7 @@ def now_in_timezone():
 
 class User(Base):
 
-    __tablename__ = "users"
+    __tablename__ = "userprofiles"
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, nullable=False)
