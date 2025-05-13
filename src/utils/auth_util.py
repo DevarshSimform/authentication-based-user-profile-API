@@ -3,8 +3,7 @@ import jwt
 from datetime import timedelta, datetime, timezone
 from dotenv import load_dotenv
 from passlib.context import CryptContext
-from fastapi import HTTPException
-
+from ..exceptions import CredentialException
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -23,10 +22,10 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-def generate_token(data: dict, expires_delta: timedelta | None = None):
+def generate_token(data: dict, expires_delta: int | None = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.now(timezone.utc) + expires_delta
+        expire = datetime.now(timezone.utc) + timedelta(minutes=expires_delta)
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=10)
     to_encode.update({"exp": expire})
@@ -43,6 +42,6 @@ def get_payload(token: str) -> dict:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Token has expired")
+        raise CredentialException()
     except jwt.InvalidTokenError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise CredentialException()

@@ -6,7 +6,7 @@ from .routers.auth_route import router as auth_router
 
 
 
-app = FastAPI()
+app = FastAPI(swagger_ui_parameters={"operationsSorter": "method"})
 
 app.include_router(user_router)
 app.include_router(auth_router)

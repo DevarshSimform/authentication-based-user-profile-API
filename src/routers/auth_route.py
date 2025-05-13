@@ -23,7 +23,7 @@ def register_user(
     return service.create(user)
 
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=Token, deprecated=True)
 def login_user(user: Annotated[LoginUser, Form()], db: Session = Depends(get_db)) -> Token:
     service = AuthService(db)
     return service.login_user(user)

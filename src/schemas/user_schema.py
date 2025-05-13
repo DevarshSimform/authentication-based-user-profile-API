@@ -12,12 +12,30 @@ class UserResponse(BaseModel):
     profile_picture_url: str | None
 
 
-class UserRetrieveResponse(UserResponse):
+class UserAdminResponse(UserResponse):
     id: int
+    role: RoleEnum
+
+
+class UserFullResponse(UserResponse):
+    id: int
+    role: RoleEnum
     disabled: bool
     created_at: datetime
     updated_at: datetime | None
     last_login: datetime | None
+
+
+class UserRetrieveResponse(UserResponse):
+    id: int
+    created_at: datetime
+    updated_at: datetime | None
+    last_login: datetime | None
+
+
+class UserAdminRetrieveResponse(UserRetrieveResponse):
+    role: RoleEnum
+    disabled: bool
 
 
 class DisableUserResponse(UserResponse):
