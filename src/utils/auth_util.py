@@ -3,6 +3,7 @@ import jwt
 from datetime import timedelta, datetime, timezone
 from dotenv import load_dotenv
 from passlib.context import CryptContext
+
 from ..exceptions import CredentialException
 load_dotenv()
 

@@ -36,3 +36,9 @@ class UserRoleAlreadyUser(UserException):
     def __init__(self):
         message = "User Role is already user"
         super().__init__(status_code=status.HTTP_200_OK, detail=message)
+
+
+class UnAuthorised(UserException):
+    def __init__(self):
+        message = "Only Admins and SuperAdmins can access"
+        super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail=message)

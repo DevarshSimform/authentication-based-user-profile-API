@@ -1,10 +1,14 @@
 from sqlalchemy.orm import Session
 
-from ..schemas.auth_schema import RegisterUser, RegisterUserResponse, LoginUser, Token
+from ..schemas.auth_schema import (
+    RegisterUser, 
+    RegisterUserResponse, 
+    LoginUser, 
+    Token
+)
 from ..repositories.auth_repo import AuthRepository
-from ..repositories.user_repo import UserRepository
 from ..utils.auth_util import create_access_token
-from ..exceptions import UserNotFound, UserCreationException
+from ..exceptions import UserNotFound
 
 
 

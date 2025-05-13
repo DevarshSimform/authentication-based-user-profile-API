@@ -1,10 +1,18 @@
 from sqlalchemy.orm import Session
 
-from ..schemas.user_schema import UserResponse, UserAdminResponse, UserRetrieveResponse, UserAdminRetrieveResponse
+from ..schemas.user_schema import (
+    UserResponse, 
+    UserAdminResponse, 
+    UserAdminRetrieveResponse
+)
 from ..repositories.auth_repo import AuthRepository
 from ..repositories.user_repo import UserRepository
 from ..models.user_model import RoleEnum
-from ..exceptions import UserNotFound, UserRoleAlreadyAdmin, UserRoleAlreadyUser
+from ..exceptions import (
+    UserNotFound, 
+    UserRoleAlreadyAdmin, 
+    UserRoleAlreadyUser
+)
 
 
 class UserService:

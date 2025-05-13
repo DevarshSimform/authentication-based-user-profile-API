@@ -8,10 +8,10 @@ from sqlalchemy import (
     URL,
     Enum as SQLEnum
 )
-from ..configurations.database import Base
-
 from zoneinfo import ZoneInfo
 from datetime import datetime
+
+from ..configurations.database import Base
 
 
 

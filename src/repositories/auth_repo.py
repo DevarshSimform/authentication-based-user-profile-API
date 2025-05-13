@@ -2,7 +2,11 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 
 from ..models.user_model import User
-from ..schemas.auth_schema import RegisterUser, RegisterUserResponse, LoginUser
+from ..schemas.auth_schema import (
+    RegisterUser, 
+    RegisterUserResponse, 
+    LoginUser
+)
 from ..utils.auth_util import verify_password, get_password_hash
 
 
