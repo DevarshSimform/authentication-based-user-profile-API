@@ -43,7 +43,20 @@ class DisableUserResponse(UserResponse):
 
 
 class UserUpdate(BaseModel):
-    firstname: str
-    lastname: str
+    firstname: str | None
+    lastname: str | None
     bio: str | None
     profile_picture_url: str | None
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "firstname": "",
+                    "lastname": "",
+                    "bio": "",
+                    "profile_picture_url": "",
+                }
+            ]
+        }
+    }

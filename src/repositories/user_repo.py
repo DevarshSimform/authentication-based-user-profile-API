@@ -65,9 +65,9 @@ class UserRepository:
         self.db.refresh(db_user)
         return db_user
     
-    def update_user_by_id(self, id, user: UserUpdate):
+    def update_user_by_id(self, id, data: dict):
         db_user = self.db.query(User).filter_by(id = id)
-        db_user.update(user.model_dump(exclude_unset=True))
+        db_user.update(data)
         self.db.commit()
         return db_user.first()
 

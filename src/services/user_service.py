@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from ..schemas.user_schema import (
     UserResponse, 
     UserAdminResponse, 
-    UserAdminRetrieveResponse
+    UserAdminRetrieveResponse,
+    UserUpdate
 )
 from ..repositories.auth_repo import AuthRepository
 from ..repositories.user_repo import UserRepository
@@ -13,6 +14,7 @@ from ..exceptions import (
     UserRoleAlreadyAdmin, 
     UserRoleAlreadyUser
 )
+from ..utils.user_util import filter_dict
 
 
 class UserService:
@@ -31,7 +33,7 @@ class UserService:
     def get_user_for_admins(self, user_id) -> UserAdminRetrieveResponse:
         user = self.user_repo.get_user_by_id_admins(user_id)
         if not user:
-            UserNotFound()
+            raise UserNotFound()
         return user
     
     
@@ -40,41 +42,43 @@ class UserService:
         return user
     
     
-    def update_user(self, user_id, user) -> UserResponse:
+    def update_user(self, user_id, user_data: UserUpdate) -> UserResponse:
         if not self.user_repo.is_user_exist_by_id(user_id):
-            UserNotFound()
-        return self.user_repo.update_user_by_id(user_id, user)
+            raise UserNotFound()
+        user_dict = user_data.model_dump()
+        filtered_dict = filter_dict(user_dict)    
+        return self.user_repo.update_user_by_id(user_id, filtered_dict)
     
     
     def disable_user(self, user_id):
         if not self.user_repo.get_user_by_id(user_id):
-            UserNotFound()
+            raise UserNotFound()
         return self.user_repo.disable_user_by_id(user_id)
 
     
     def enable_user(self, user_id):
         if not self.user_repo.get_user_by_id(user_id):
-            UserNotFound()
+            raise UserNotFound()
         return self.user_repo.enable_user_by_id(user_id)
     
 
     def user_to_admin(self, user_role, user_id):
         if not self.user_repo.get_user_by_id(user_id):
-            UserNotFound()
+            raise UserNotFound()
         if user_role != RoleEnum.user:
-            UserRoleAlreadyAdmin()
+            raise UserRoleAlreadyAdmin()
         return self.user_repo.make_user_to_admin(user_id)
 
 
     def admin_to_user(self, user_role, user_id):
         if not self.user_repo.get_user_by_id(user_id):
-            UserNotFound()
+            raise UserNotFound()
         if user_role != RoleEnum.admin:
-            UserRoleAlreadyUser()
+            raise UserRoleAlreadyUser()
         return self.user_repo.make_admin_to_user(user_id)
     
 
     def delete_user(self, user_id) -> dict:
         if not self.user_repo.is_user_exist_by_id(user_id):
-            UserNotFound()
+            raise UserNotFound()
         return self.user_repo.delete_user_by_id(user_id)

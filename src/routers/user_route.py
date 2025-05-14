@@ -71,20 +71,20 @@ def get_user(
     return service.get_user_for_admins(user_id)
 
 
-@router.put(
+@router.patch(
     "/", 
     response_model=UserRetrieveResponse, 
     tags=["Users"],
     description="Update current user profile."
 )
 def update_user(
-    user: Annotated[UserUpdate, Body()],
+    user_data: Annotated[UserUpdate, Body()],
     user_with_db: tuple[UserFullResponse, Session] = Depends(get_current_user_with_db)
 ) -> UserRetrieveResponse:
     
     user, db = user_with_db
     service = UserService(db)
-    return service.update_user(user.id, user)
+    return service.update_user(user.id, user_data)
 
 
 @router.patch(
