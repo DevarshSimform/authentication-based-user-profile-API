@@ -60,12 +60,14 @@ class RegisterUser(BaseModel):
 
 
 class RegisterUserResponse(BaseModel):
-    username: str
-    email: EmailStr
-    firstname: str
-    lastname: str
-    bio: str | None
-    profile_picture_url: str | None
+    # username: str
+    # email: EmailStr
+    # firstname: str
+    # lastname: str
+    # bio: str | None
+    # profile_picture_url: str | None
+
+    message: str
 
 
 class LoginUser(BaseModel):

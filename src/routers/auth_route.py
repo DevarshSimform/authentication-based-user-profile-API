@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Form
+from fastapi import APIRouter, Depends, Form, BackgroundTasks
 from sqlalchemy.orm import Session
 from typing import Annotated
 
@@ -10,7 +10,6 @@ from ..schemas.auth_schema import (
 )
 from ..configurations.database import get_db
 from ..services.auth_service import AuthService
-
 
 
 router = APIRouter(
@@ -26,11 +25,12 @@ router = APIRouter(
 )
 def register_user(
     user: RegisterUser, 
-    db: Session = Depends(get_db)
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
 ) -> RegisterUserResponse:
     
     service = AuthService(db)
-    return service.create(user)
+    return service.create(user, background_tasks)
 
 
 @router.post(
