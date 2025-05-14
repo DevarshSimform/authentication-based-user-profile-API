@@ -42,6 +42,17 @@ def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
 
 
+from fastapi import Request
+import time
+
+@app.middleware('http')
+async def get_process_time(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    print("\n---------------> Process Time :", process_time , "<---------------\n")
+    return response
+
 def main():
     uvicorn.run(app, port=8000)
 
