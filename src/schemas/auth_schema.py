@@ -22,7 +22,7 @@ class RegisterUser(BaseModel):
     profile_picture_url: str | None
     role: RoleEnum = RoleEnum.user
 
-    password_regex: ClassVar[str] = r"[A-Za-z]*\d+[A-Za-z\d@$!%*?&]*[@$!%*?&]+[A-Za-z\d@$!%*?&]*"
+    password_regex: ClassVar[str] = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
 
 
     model_config = {
@@ -60,12 +60,14 @@ class RegisterUser(BaseModel):
 
 
 class RegisterUserResponse(BaseModel):
-    username: str
-    email: EmailStr
-    firstname: str
-    lastname: str
-    bio: str | None
-    profile_picture_url: str | None
+    # username: str
+    # email: EmailStr
+    # firstname: str
+    # lastname: str
+    # bio: str | None
+    # profile_picture_url: str | None
+
+    message: str
 
 
 class LoginUser(BaseModel):
