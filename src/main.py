@@ -42,6 +42,7 @@ def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
 
 
+
 def main():
     uvicorn.run(app, port=8000)
 
