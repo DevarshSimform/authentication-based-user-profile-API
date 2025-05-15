@@ -1,9 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
+
 from .configurations.database import Base, engine
 from .routers.user_route import router as user_router
 from .routers.auth_route import router as auth_router
-
+from .middleware import register_middlewares
 
 
 
@@ -41,6 +42,7 @@ app.include_router(auth_router)
 def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
 
+register_middlewares(app)
 
 
 def main():
